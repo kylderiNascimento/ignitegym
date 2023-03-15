@@ -1,8 +1,9 @@
-import { View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { THEME } from './src/theme';
 import { Loading } from '@components/Loading';
+import { SingIn } from '@screens/Singin';
 
 
 
@@ -15,8 +16,8 @@ export default function App() {
         barStyle="light-content"
         backgroundColor="transparent"
         translucent 
-      />    
-      <Loading />
+      />   
+      {fontsLoaded ? <SingIn /> : <Loading />} 
     </NativeBaseProvider>
   );
 }
