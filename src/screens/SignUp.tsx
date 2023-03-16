@@ -5,7 +5,7 @@ import LogoSvg from '@assets/logo.svg';
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
-export function SingUp(){
+export function SignUp(){
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
             <VStack flex={1} bg="gray.700" px={10} pb={16}>
