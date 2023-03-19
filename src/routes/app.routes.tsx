@@ -23,24 +23,28 @@ const { Navigator, Screen } = createBottomTabNavigator<AppRoutes>();
 
 export function AppRoutes(){
 
-    const { sizes } = useTheme();
+    const { sizes, colors } = useTheme();
+
+    const iconSize = sizes[6];
 
     return (
         <Navigator screenOptions={{ 
             headerShown: false, 
             tabBarShowLabel: false,
+            tabBarActiveTintColor: colors.green[500],
+            tabBarInactiveTintColor: colors.gray[200]
         }}>
             <Screen name="home" 
                     component={Home} 
-                    options={{ tabBarIcon:(props) => (<HomeSVG fill={props.color} width={sizes[6]} height={sizes[6]} /> ) }}
+                    options={{ tabBarIcon:(props) => (<HomeSVG fill={props.color} width={iconSize} height={iconSize} /> ) }}
             />
             <Screen name="history" 
                     component={History} 
-                    options={{ tabBarIcon:(props) => (<HistorySVG fill={props.color} width={sizes[6]} height={sizes[6]} /> ) }}
+                    options={{ tabBarIcon:(props) => (<HistorySVG fill={props.color} width={iconSize} height={iconSize} /> ) }}
             />
             <Screen name="profile" 
                     component={Profile} 
-                    options={{ tabBarIcon:(props) => (<ProfileSVG   fill={props.color} width={sizes[6]} height={sizes[6]} /> ) }}
+                    options={{ tabBarIcon:(props) => (<ProfileSVG   fill={props.color} width={iconSize} height={iconSize} /> ) }}
             />
             <Screen name="exercise" 
                     component={Exercise} 
