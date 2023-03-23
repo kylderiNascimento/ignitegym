@@ -1,9 +1,22 @@
-import { Center, Text } from 'native-base';
+import { Center, ScrollView, Text, VStack } from 'native-base';
+import { ScreenHeader } from '@components/ScreenHeader';
+import { UserPhoto } from '@components/UserPhoto';
 
 export function Profile(){
     return (
-        <Center flex={1}>
-            <Text color="white">Profile</Text>
-        </Center>
+        <VStack flex={1}>
+            <ScreenHeader title='Perfil' />
+
+            <ScrollView>
+                <Center mt={6} px={10}>
+                <UserPhoto 
+                    source={{ uri: 'https://github.com/kylderinascimento.png' }}
+                    alt="Foto do usuário"
+                    size={33}
+                />
+                </Center>
+            </ScrollView>
+
+        </VStack>
     );
 }
