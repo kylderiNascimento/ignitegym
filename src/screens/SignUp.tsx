@@ -2,6 +2,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { useNavigation } from "@react-navigation/native";
 import { VStack, Image, Text, Center, Heading , ScrollView } from "native-base";
 
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import { Input } from "@components/Input";
@@ -12,7 +15,13 @@ type FormDataProps = {
     email: string;
     password: string;
     password_confirm: string;
-  }
+}
+
+// Validando inputs - Utilizando Schema Validations
+const signUpSchema = yup.object({
+    name: yup.string().required('Informe o nome'),
+    email: yup.string().required('Informe o e-mail').email('E-mail inválido') // o .email() verifica se o email é valido
+});
 
 export function SignUp(){
 
@@ -24,7 +33,8 @@ export function SignUp(){
             email : 'kylderi.nascimento@hotmail.com',
             password : '',
             password_confirm : ''
-        }
+        },
+        resolver: yupResolver(signUpSchema), // Parametro para validação dos inputs
     });
 
     function handleGoBack(){
@@ -55,9 +65,6 @@ export function SignUp(){
                     <Controller 
                         control={control}
                         name="name"
-                        rules={{
-                            required: 'Informe o nome.'
-                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="Nome"
@@ -72,13 +79,6 @@ export function SignUp(){
                     <Controller 
                         control={control}
                         name="email"
-                        rules={{
-                            required: 'Informe o email.',
-                            pattern: {
-                              value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'E-mail inválido'
-                            }
-                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="E-mail" 
