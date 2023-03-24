@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useForm, Controller } from 'react-hook-form';
 import { useNavigation } from "@react-navigation/native";
 import { VStack, Image, Text, Center, Heading , ScrollView } from "native-base";
 
@@ -11,22 +11,14 @@ export function SignUp(){
 
     const navigation = useNavigation();
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const { control } = useForm();
 
     function handleGoBack(){
         navigation.goBack();
     }
 
     function handleSignUp() {
-        console.log({
-          name,
-          email,
-          password,
-          passwordConfirm
-        });
+        console.log();
     }
 
     return (
@@ -46,27 +38,56 @@ export function SignUp(){
                         Crie sua conta
                     </Heading>
 
-                    <Input 
-                        placeholder="Nome" 
-                        onChangeText={setName}
+                    <Controller 
+                        control={control}
+                        name="name"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="Nome"
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
                     />
 
-                    <Input 
-                        placeholder="E-mail" 
-                        keyboardType="email-address" 
-                        autoCapitalize="none"
-                        onChangeText={setEmail}
+                    <Controller 
+                        control={control}
+                        name="email"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="E-mail" 
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
                     />
 
-                    <Input placeholder="Senha" 
-                        onChangeText={setPassword}
-                        secureTextEntry 
+                    <Controller 
+                        control={control}
+                        name="password"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="Senha" 
+                            secureTextEntry
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
                     />
 
-                    <Input 
-                        placeholder="Confirmar a Senha" 
-                        secureTextEntry
-                        onChangeText={setPasswordConfirm}
+                    <Controller 
+                        control={control}
+                        name="password_confirm"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="Confirmar a Senha" 
+                            secureTextEntry
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
                     />
 
                     <Button title="Criar e acessar" onPress={handleSignUp} />
