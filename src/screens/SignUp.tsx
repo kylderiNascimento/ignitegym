@@ -86,7 +86,7 @@ export function SignUp(){
                             secureTextEntry
                             onChangeText={onChange}
                             value={value}
-                            onSubmitEditing={handleSubmit(handleSignUp)}
+                            onSubmitEditing={handleSubmit(handleSignUp)} // chamar a função do botão quando clicar no enviar do teclado
                             returnKeyType="send"
                         />
                         )}
