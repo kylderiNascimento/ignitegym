@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
-import { Center, ScrollView, VStack, Skeleton, Text, Heading } from 'native-base';
+import { Center, ScrollView, VStack, Skeleton, Text, Heading, useToast } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
@@ -15,6 +15,8 @@ export function Profile(){
 
     const [photoIsLoading, setPhotoIsLoading] = useState(false);
     const [userPhoto, setUserPhoto] = useState('https://github.com/kylderinascimento.png');
+
+    const toast = useToast();
 
     async function handleUserPhotoSelected(){
         setPhotoIsLoading(true); // ataivar o carregamento da foto
@@ -35,11 +37,21 @@ export function Profile(){
 
                 const photoInfo = await FileSystem.getInfoAsync(photoSelected.assets[0].uri);
 
-                if (photoInfo.size && (photoInfo.size  / 1024 / 1024 ) > 5){ // tranforma bytes em MB
-                    return Alert.alert('Essa imagem é muito grande. Escolha uma de até 5MB.'); 
+                if (photoInfo.size && (photoInfo.size  / 1024 / 1024 ) > 0.5){ // tranforma bytes em MB
+                    
+                    return toast.show({
+                        title: 'Essa imagem é muito grande. Escolha uma de até 5MB.',
+                        placement: 'top', bgColor: 'red.500' 
+                    });
+
                 }
 
                 setUserPhoto(photoSelected.assets[0].uri);
+
+                return toast.show({
+                    title: 'Sua foto foi atualizada com sucesso.', 
+                    placement: 'top', bgColor: 'green.500' 
+                });
             }
 
         } catch (error) {
