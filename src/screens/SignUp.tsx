@@ -18,7 +18,14 @@ export function SignUp(){
 
     const navigation = useNavigation();
 
-    const { control, handleSubmit } = useForm<FormDataProps>();
+    const { control, handleSubmit } = useForm<FormDataProps>({
+        defaultValues : {
+            name : 'Kylderi',
+            email : 'kylderi.nascimento@hotmail.com',
+            password : '',
+            password_confirm : ''
+        }
+    });
 
     function handleGoBack(){
         navigation.goBack();
