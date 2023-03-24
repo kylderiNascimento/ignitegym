@@ -18,7 +18,7 @@ export function SignUp(){
 
     const navigation = useNavigation();
 
-    const { control, handleSubmit } = useForm<FormDataProps>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
         defaultValues : {
             name : 'Kylderi',
             email : 'kylderi.nascimento@hotmail.com',
@@ -66,6 +66,9 @@ export function SignUp(){
                         />
                         )}
                     />
+
+                    <Text color="white">{errors.name?.message}</Text>
+
 
                     <Controller 
                         control={control}
