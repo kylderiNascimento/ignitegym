@@ -6,6 +6,8 @@ import { useAuth } from '@hooks/useAuth';
 
 import { UserPhoto } from "./UserPhoto";
 
+import defaulUserPhotoImg from '@assets/userPhotoDefault.png'; 
+
 export function HomeHeader(){
 
     const { user } = useAuth(); 
@@ -13,7 +15,7 @@ export function HomeHeader(){
     return (
         <HStack bg="gray.600" pt={16} pb={5} px={8} alignItems="center">
             <UserPhoto 
-                source={{ uri: 'https://github.com/kylderinascimento.png' }}
+                source={user.avatar  ? { uri: user.avatar } : defaulUserPhotoImg}
                 size={16}
                 alt="Imagem do usuário"
                 mr={4}
