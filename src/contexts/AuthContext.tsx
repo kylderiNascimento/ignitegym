@@ -28,11 +28,11 @@ type AuthContextProviderProps = {
         email,
         avatar: '',
       })
-
+    }
+ 
     return (
       <AuthContext.Provider value={{ user, singIn }}>
         {children}
       </AuthContext.Provider>
     )
-  }
-
+}
