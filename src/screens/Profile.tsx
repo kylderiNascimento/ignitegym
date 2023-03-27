@@ -12,6 +12,9 @@ import defaulUserPhotoImg from '@assets/userPhotoDefault.png';
 import { api } from '@services/api';
 import { useAuth } from '@hooks/useAuth';
 
+import { api } from '@services/api';
+import { AppError } from '@utils/AppError';
+
 import { ScreenHeader } from '@components/ScreenHeader';
 import { UserPhoto } from '@components/UserPhoto';
 import { Input } from '@components/Input';
@@ -110,7 +113,27 @@ export function Profile(){
 
 
     async function handleProfileUpdate(data: FormDataProps) {
-        console.log(data);
+        try {
+            setIsUpdating(true);
+            await api.put('/users', data);
+      
+            toast.show({
+              title: 'Perfil atualizado com sucesso!',
+              placement: 'top',
+              bgColor: 'green.500'
+            });
+        } catch (error) {
+            const isAppError = error instanceof AppError;
+            const title = isAppError ? error.message : 'Não foi possível atualizar os dados. Tente novamente mais tarde.';
+      
+            toast.show({
+              title,
+              placement: 'top',
+              bgColor: 'red.500'
+            })
+        } finally {
+            setIsUpdating(false);
+        }
     }
 
     return (
