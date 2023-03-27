@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Box, Heading, HStack, Icon, Image, ScrollView, Text, useToast, VStack } from 'native-base';
+import { Box, Heading, HStack, Icon, Image, Text, useToast, VStack } from 'native-base';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -13,15 +13,16 @@ import { ExerciseDTO } from '@dtos/ExerciseDTO';
 import BodySvg from '@assets/body.svg';
 import SeriesSvg from '@assets/series.svg';
 import RepetitionsSvg from '@assets/repetitions.svg';
+
 import { Button } from '@components/Button';
 import { Loading } from '@components/Loading';
+
 
 type RouteParamsProps = {
   exerciseId: string;
 }
 
 export function Exercise() {
-
   const [sendingRegister, setSendingRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [exercise, setExercise] = useState<ExerciseDTO>({} as ExerciseDTO);
@@ -39,7 +40,6 @@ export function Exercise() {
   async function fetchExerciseDetails() {
     try {
       setIsLoading(true);
-
       const response = await api.get(`/exercises/${exerciseId}`);
 
       setExercise(response.data);
@@ -53,7 +53,7 @@ export function Exercise() {
         placement: 'top',
         bgColor: 'red.500'
       })
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   }
@@ -61,7 +61,7 @@ export function Exercise() {
   async function handleExerciseHistoryRegister() {
     try {
       setSendingRegister(true);
-
+      
       await api.post('/history', { exercise_id: exerciseId });
 
       toast.show({
@@ -89,10 +89,8 @@ export function Exercise() {
     fetchExerciseDetails();
   },[exerciseId])
 
-
   return (
-    <VStack flex={1}>      
-
+    <VStack flex={1}>
       <VStack px={8} bg="gray.600" pt={12}>
         <TouchableOpacity onPress={handleGoBack}>
           <Icon 
@@ -118,7 +116,6 @@ export function Exercise() {
         </HStack>
       </VStack>
 
-      <ScrollView>
       {isLoading ? <Loading /> : 
         <VStack p={8}>
           <Box rounded="lg" mb={3} overflow="hidden">
@@ -159,8 +156,6 @@ export function Exercise() {
           </Box>
         </VStack>
       }
-      </ScrollView>
-      
-    </VStack>
+    </VStack> 
   );
 }
