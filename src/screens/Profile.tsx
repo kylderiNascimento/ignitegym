@@ -11,8 +11,6 @@ import defaulUserPhotoImg from '@assets/userPhotoDefault.png';
 
 import { api } from '@services/api';
 import { useAuth } from '@hooks/useAuth';
-
-import { api } from '@services/api';
 import { AppError } from '@utils/AppError';
 
 import { ScreenHeader } from '@components/ScreenHeader';
@@ -57,8 +55,7 @@ export function Profile(){
     const [userPhoto, setUserPhoto] = useState('https://github.com/kylderinascimento.png');
 
     const toast = useToast();
-
-    const { user } = useAuth();
+    const { user, updateUserProfile } = useAuth();
     const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({ 
         defaultValues: { 
           name: user.name,
@@ -96,7 +93,17 @@ export function Profile(){
 
                 }
 
-                setUserPhoto(photoSelected.assets[0].uri);
+                //setUserPhoto(photoSelected.assets[0].uri);
+
+                const fileExtension = photoSelected.assets[0].uri.split('.').pop();
+
+                const photoFile = {
+                    name: `${user.name}.${fileExtension}`.toLowerCase(),
+                    uri: photoSelected.assets[0].uri,
+                    type: `${photoSelected.assets[0].type}/${fileExtension}`
+                }
+
+                console.log(photoFile);
 
                 return toast.show({
                     title: 'Sua foto foi atualizada com sucesso.', 
@@ -115,7 +122,13 @@ export function Profile(){
     async function handleProfileUpdate(data: FormDataProps) {
         try {
             setIsUpdating(true);
+
+            const userUpdated = user;
+            userUpdated.name = data.name;
+
             await api.put('/users', data);
+
+            await updateUserProfile(userUpdated);
       
             toast.show({
               title: 'Perfil atualizado com sucesso!',
