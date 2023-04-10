@@ -52,7 +52,6 @@ export function Profile(){
 
     const [isUpdating, setIsUpdating] = useState(false);
     const [photoIsLoading, setPhotoIsLoading] = useState(false);
-    const [userPhoto, setUserPhoto] = useState('https://github.com/kylderinascimento.png');
 
     const toast = useToast();
     const { user, updateUserProfile } = useAuth();
